@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
         if (id == R.id.action_sortbypopularity)
-            preferencesEditor.putString("sort", "popularity.desc");
+            preferencesEditor.putString("sort", "popular");
         if (id == R.id.action_sortbyrating)
-            preferencesEditor.putString("sort", "vote_average.desc");
+            preferencesEditor.putString("sort", "top_rated");
         preferencesEditor.commit();
         UpdateMovies();
         Log.e("Sort: ", sharedPreferences.getString("sort", null));
@@ -86,16 +86,13 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Uri.Builder builder = new Uri.Builder();
                 String sortPreference = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("sort", null);
-                sortPreference = (sortPreference == null) ? "popularity" : sortPreference;
+                sortPreference = (sortPreference != "popular" && sortPreference != "top_rated") ? "popular" : sortPreference;
                 builder.scheme("https")
                         .authority("api.themoviedb.org")
                         .appendPath("3")
-                        .appendPath("discover")
                         .appendPath("movie")
-                        .appendQueryParameter("primary_release_date.gte","1981-06-20")
-                        .appendQueryParameter("primary_release_date.lte", "1981-07-20")
-                        .appendQueryParameter("sort_by", sortPreference)
-                        .appendQueryParameter("api_key", "XXXX");
+                        .appendPath(sortPreference)
+                        .appendQueryParameter("api_key", "e2eca0822b134a9b9f84e5fc10d82618");
                 String myUrl = builder.build().toString();
                 URL url = new URL(myUrl);
 
