@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         .appendPath("3")
                         .appendPath("movie")
                         .appendPath(sortPreference)
-                        .appendQueryParameter("api_key", "e2eca0822b134a9b9f84e5fc10d82618");
+                        .appendQueryParameter("api_key", "XXXX");
                 String myUrl = builder.build().toString();
                 URL url = new URL(myUrl);
 
